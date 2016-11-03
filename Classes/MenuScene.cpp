@@ -26,9 +26,6 @@ bool MenuScene::init()
   if(!Layer::init())
     return false;
 
-  auto visibleSize = Director::getInstance()->getVisibleSize();
-  Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
   // Add background
   auto background = Sprite::create("game_menu.png");
   this->addChild(background, 0);
@@ -46,6 +43,9 @@ bool MenuScene::init()
   this->addChild(menu, 1);
 
   // Set menu position
+  auto visibleSize = Director::getInstance()->getVisibleSize();
+  Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
   this->setPosition(Vec2(origin.x + visibleSize.width - background->getContentSize().width / 2,
 	  origin.y + background->getContentSize().height / 2));
 }
