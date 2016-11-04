@@ -18,8 +18,6 @@ public:
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(ControlLayer);
-private:
-	bool onTouchBegan(Touch *touch, Event *unused_event);
 };
 
 #endif //__CONTROL_LAYER_H__

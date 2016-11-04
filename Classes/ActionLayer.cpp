@@ -1,4 +1,5 @@
 #include "ActionLayer.h"
+#include "Piece.h"
 
 USING_NS_CC;
 
@@ -33,17 +34,16 @@ void ActionLayer::loadLevel(int level)
 {
 	levelLoaded = false;
 	
-	// Create background
-	auto background = Sprite::create("game_background.png");
-	background->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-	this->addChild(background, 0);
-
 	// Set menu position
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	auto middleScreen = Vec2((visibleSize.width + origin.x) / 2, (visibleSize.height + origin.y) / 2);
 
-	background->setPosition(Vec2(origin.x + visibleSize.width - background->getContentSize().width / 2,
-		origin.y + background->getContentSize().height / 2));
+	// Create background
+	auto background = Sprite::create("game_background.png");
+	this->addChild(background, 0);
+	background->setScale(1.7f);
+	background->setPosition(middleScreen);
 
 	// Create board pieces
 	for (auto i = 0; i < 33; i++)
@@ -51,12 +51,17 @@ void ActionLayer::loadLevel(int level)
 		// Set position of piece basaed on array map
 		auto pos = Vec2(positionMap[i][0], positionMap[i][1]);
 
-		// Create sprite for piece
-		auto piece = Sprite::create("button.png");
-		piece->setPosition(pos);
+		// Dont add the middle piece
+		if (i != 16)
+		{
+			// Create sprite for piece
+			auto piece = Piece::create();
+			piece->setScale(1.7f);
+			piece->setPosition(pos);
 
-		// Attach piece to layer
-		this->addChild(piece);
+			// Attach piece to layer
+			this->addChild(piece);
+		}
 	}
 
 	// Create time label
@@ -65,31 +70,6 @@ void ActionLayer::loadLevel(int level)
 	// Create score label
 	score = 0;
 	scoreLabel = Label::create("0", "Arial", 14);
-
-	/*
-	auto mySprite = Sprite("A.png");
-
-	auto touchListener = EventListenerTouchOneByOne::create();
-	///
-	touchListener->onTouchBegan = [=](Touch* touch, Event* event){
-		auto target = static_cast<Sprite*>(event->getCurrentTarget());
-		Point locationInNode = target->convertToNodeSpace(touch->getLocation());
-		Size s = target->getContentSize();
-		Rect rect = Rect(0, 0, s.width, s.height);
-		if (rect.containsPoint(locationInNode))
-		{
-			mySprite->setTexture("B.png"); // Here
-			return true;
-		}
-		return false;
-	};
-
-	touchListener->onTouchEnded(Touch* touch, Event* event)
-	{
-		mySprite->setTexture("B.png"); // Or Here
-	}
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, mySprite);
-	*/
 }
 
 void ActionLayer::loadSound()

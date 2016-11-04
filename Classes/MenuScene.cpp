@@ -26,28 +26,31 @@ bool MenuScene::init()
   if(!Layer::init())
     return false;
 
+  // Set menu position
+  auto visibleSize = Director::getInstance()->getVisibleSize();
+  auto origin = Director::getInstance()->getVisibleOrigin();
+  auto middleScreen = Vec2((visibleSize.width + origin.x) / 2, (visibleSize.height + origin.y) / 2);
+
   // Add background
   auto background = Sprite::create("game_menu.png");
+  background->setScale(1.7f);
   this->addChild(background, 0);
 
   // Add menu items
   auto start = MenuItemImage::create("btn_novo_jogo.png", "btn_novo_jogo_press.png", CC_CALLBACK_1(MenuScene::start, this));
-  start->setPosition(Vec2(0.0f, -20.0f));
+  start->setScale(1.7f);
+  start->setPosition(Vec2(0.0f, -40.0f));
 
   auto options = MenuItemImage::create("btn_opcoes.png", "btn_opcoes_press.png", CC_CALLBACK_1(MenuScene::options, this));
-  options->setPosition(Vec2(0.0f, -70.0f));
+  options->setScale(1.7f);
+  options->setPosition(Vec2(0.0f, -100.0f));
 
   // Create menu
   auto menu = Menu::create(start, options, NULL);
   menu->setPosition(Vec2::ZERO);
   this->addChild(menu, 1);
 
-  // Set menu position
-  auto visibleSize = Director::getInstance()->getVisibleSize();
-  Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-  this->setPosition(Vec2(origin.x + visibleSize.width - background->getContentSize().width / 2,
-	  origin.y + background->getContentSize().height / 2));
+  this->setPosition(middleScreen);
 }
 
 void MenuScene::start(cocos2d::Ref* pSender)

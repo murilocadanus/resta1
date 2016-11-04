@@ -20,7 +20,7 @@ bool ControlLayer::init()
 	if (!Layer::init())
 		return false;
 
-	this->isTouchEnabled = true;
+	this->setTouchEnabled(true);
 
 	positionMap2[0][0] = 123;
 	positionMap2[0][1] = 110;
@@ -221,10 +221,4 @@ bool ControlLayer::init()
 	positionMap2[32][4] = 32;
 
 	return true;
-}
-
-// Touch Events
-bool onTouchBegan(Touch *touch, Event *unused_event)
-{
-
 }

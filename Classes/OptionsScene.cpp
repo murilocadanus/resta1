@@ -25,8 +25,14 @@ bool OptionsScene::init()
 	if (!Layer::init())
 		return false;
 
+	// Set menu position
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto middleScreen = Vec2((visibleSize.width + origin.x) / 2, (visibleSize.height + origin.y) / 2);
+
 	// Add background
 	auto background = Sprite::create("game_options.png");
+	background->setScale(1.7f);
 	this->addChild(background, 0);
 
 	// Create menu items
@@ -37,7 +43,8 @@ bool OptionsScene::init()
 	effects->setPosition(Vec2(0.0f, -70.0f));
 
 	auto back = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
-	back->setPosition(Vec2(-30.0f, -90.0f));
+	back->setScale(1.7f);
+	back->setPosition(Vec2(-50.0f, -150.0f));
 
 	// Create menus
 	auto menuOptions = Menu::create(music, effects, NULL);
@@ -50,12 +57,7 @@ bool OptionsScene::init()
 	this->addChild(menuOptions, 1);
 	this->addChild(menuNav, 1);
 
-	// Set menu position
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-	this->setPosition(Vec2(origin.x + visibleSize.width - background->getContentSize().width / 2,
-		origin.y + background->getContentSize().height / 2));
+	this->setPosition(middleScreen);
 }
 
 void OptionsScene::music(cocos2d::Ref* pSender)
