@@ -25,7 +25,7 @@ bool ActionLayer::init()
 	this->loadLevel(1);
 
 	// Schedule clock to update game time
-	this->schedule(SEL_SCHEDULE(&ActionLayer::tick), 1.0f, 0, 0);
+	this->schedule(SEL_SCHEDULE(&ActionLayer::tick), 1.0f, CC_REPEAT_FOREVER, 0);
 
 	return true;
 }
@@ -65,11 +65,18 @@ void ActionLayer::loadLevel(int level)
 	}
 
 	// Create time label
-	timeLabel = Label::create("Tempo: 00:00", "Arial", 14);
+	timeLabel = Label::createWithTTF("Tempo: 00:00", "fonts/arial.ttf", 14);
+	timeLabel->setColor(Color3B(0, 0, 0));
+	timeLabel->setPosition(Vec2(80, 405));
+	timeLabel->setRotation(-15.0f);
+	this->addChild(timeLabel, 1);
 
 	// Create score label
 	score = 0;
-	scoreLabel = Label::create("0", "Arial", 14);
+	scoreLabel = Label::create("0", "fonts/arial.ttf", 14);
+	scoreLabel->setPosition(Vec2(251, 403));
+	scoreLabel->setRotation(-15.0f);
+	this->addChild(scoreLabel);
 }
 
 void ActionLayer::loadSound()
@@ -85,16 +92,20 @@ void ActionLayer::unloadSound()
 void ActionLayer::tick(float dt)
 {
 	//Increment the time variable by the scheduled interval
-	timeGame = timeGame + .1;
+	timeGame = timeGame + 1;
 
 	//Get the int value for total seconds
-	auto seconds = (int)timeGame;
+	auto seconds = timeGame;
 
 	//Get the minutes
 	int realMinutes = seconds / 60;
 	//Get the seconds left over after you find the total minutes
 	int realSeconds = seconds % 60;
 
+	char buff[20];
+	snprintf(buff, sizeof(buff), "Tempo: %.2d:%.2d", realMinutes, realSeconds);
+	std::string buffAsStdStr = buff;
+
 	// Add the string to the label with the calculated minutes and seconds
-	//timeLabel->setString("Tempo: " + realMinutes + realSeconds);
+	timeLabel->setString(buffAsStdStr);
 }
