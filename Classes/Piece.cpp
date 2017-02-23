@@ -11,6 +11,27 @@ bool Piece::init()
 	return true;
 }
 
+void Piece::setInitialPos(Vec2 initialPos)
+{
+	// Save the initial position for this piece
+	this->initialPos = initialPos;
+
+	// Set the position to sprite
+	this->setPosition(initialPos);
+
+	// Set initial scale
+	this->setScale(1.7f);
+}
+
+void Piece::setInitialZOrder(int zOrder)
+{
+	// Save initial z order based on piece array position
+	this->initialZOrder = zOrder;
+
+	// Set sprite z order
+	this->setZOrder(zOrder);
+}
+
 void Piece::addEventListener()
 {
 	// Create listener to interpret touch
@@ -19,6 +40,9 @@ void Piece::addEventListener()
 
 	// Validate if this piece is touched
 	listener->onTouchBegan = CC_CALLBACK_2(Piece::onTouchBegan, this);
+
+	// Call the move action
+	listener->onTouchMoved = CC_CALLBACK_2(Piece::onTouchMoved, this);
 
 	// Call an action to finalize touch
 	listener->onTouchEnded = CC_CALLBACK_2(Piece::onTouchEnded, this);
@@ -35,6 +59,7 @@ bool Piece::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 	if (rect.containsPoint(p))
 	{
 		this->setScale(2.0f);
+		this->setZOrder(99);
 		return true; // to indicate that we have consumed it.
 	}
 	else
@@ -47,10 +72,21 @@ bool Piece::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 void Piece::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)
 {
 	CCLOG("onTouchMoved:");
+	Vec2 p = touch->getLocation();
+	this->setPosition(p);
 }
 
 void Piece::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-	this->setScale(1.7f);
-	CCLOG("onTouchEnded:");
+	/*if () // Valid move
+	{
+
+	}
+	else // Ilegal move
+	{*/
+		this->setPosition(initialPos);
+		this->setScale(1.7f);
+		this->setZOrder(this->initialZOrder);
+		CCLOG("onTouchEnded:");
+	//}
 }

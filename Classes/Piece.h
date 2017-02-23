@@ -15,6 +15,8 @@ class Piece : public cocos2d::Sprite
 {
 public:
 	CREATE_FUNC(Piece);
+	void setInitialPos(cocos2d::Vec2 initialPos);
+	void setInitialZOrder(int zOrder);
 
 private:
 	bool init();
@@ -22,6 +24,9 @@ private:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 	void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
 	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
+	cocos2d::Vec2 initialPos;
+	int initialZOrder;
 };
 
 #endif //__PIECE_H__

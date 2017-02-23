@@ -56,8 +56,8 @@ void ActionLayer::loadLevel(int level)
 		{
 			// Create sprite for piece
 			auto piece = Piece::create();
-			piece->setScale(1.7f);
-			piece->setPosition(pos);
+			piece->setInitialPos(pos);
+			piece->setInitialZOrder(i);
 
 			// Attach piece to layer
 			this->addChild(piece);
