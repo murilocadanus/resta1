@@ -18,9 +18,6 @@ void Piece::setInitialPos(Vec2 initialPos)
 
 	// Set the position to sprite
 	this->setPosition(initialPos);
-
-	// Set initial scale
-	this->setScale(1.7f);
 }
 
 void Piece::setInitialZOrder(int zOrder)
@@ -58,7 +55,6 @@ bool Piece::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 
 	if (rect.containsPoint(p))
 	{
-		this->setScale(2.0f);
 		this->setZOrder(99);
 		return true; // to indicate that we have consumed it.
 	}
@@ -78,14 +74,13 @@ void Piece::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)
 
 void Piece::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-	/*if () // Valid move
+	/*if (touch->getLocationInView()) // Valid move
 	{
 
 	}
 	else // Ilegal move
 	{*/
 		this->setPosition(initialPos);
-		this->setScale(1.7f);
 		this->setZOrder(this->initialZOrder);
 		CCLOG("onTouchEnded:");
 	//}

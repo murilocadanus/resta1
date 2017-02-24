@@ -33,16 +33,14 @@ bool MenuScene::init()
 
   // Add background
   auto background = Sprite::create("game_menu.png");
-  background->setScale(1.7f);
+  background->setPosition(Vec2::ZERO);
   this->addChild(background, 0);
 
   // Add menu items
   auto start = MenuItemImage::create("btn_novo_jogo.png", "btn_novo_jogo_press.png", CC_CALLBACK_1(MenuScene::start, this));
-  start->setScale(1.7f);
   start->setPosition(Vec2(0.0f, -40.0f));
 
   auto options = MenuItemImage::create("btn_opcoes.png", "btn_opcoes_press.png", CC_CALLBACK_1(MenuScene::options, this));
-  options->setScale(1.7f);
   options->setPosition(Vec2(0.0f, -100.0f));
 
   // Create menu

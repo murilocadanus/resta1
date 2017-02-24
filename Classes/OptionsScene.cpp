@@ -32,7 +32,7 @@ bool OptionsScene::init()
 
 	// Add background
 	auto background = Sprite::create("game_options.png");
-	background->setScale(1.7f);
+	background->setPosition(Vec2::ZERO);
 	this->addChild(background, 0);
 
 	// Create menu items
@@ -43,7 +43,6 @@ bool OptionsScene::init()
 	effects->setPosition(Vec2(0.0f, -70.0f));
 
 	auto back = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
-	back->setScale(1.7f);
 	back->setPosition(Vec2(-50.0f, -150.0f));
 
 	// Create menus
