@@ -11,17 +11,19 @@
 
 #include "cocos2d.h"
 
-class OptionsScene : public cocos2d::Layer
+USING_NS_CC;
+
+class OptionsScene : public Layer
 {
 public:
-	static cocos2d::Scene* createScene();
+	static Scene* scene();
 	virtual bool init();
 
-	// implement the "static create()" method manually
 	CREATE_FUNC(OptionsScene);
-	void music(cocos2d::Ref* pSender);
-	void effects(cocos2d::Ref* pSender);
-	void back(cocos2d::Ref* pSender);
+
+	void music(Ref* pSender);
+	void effects(Ref* pSender);
+	void back(Ref* pSender);
 };
 
 #endif //__OPTIONS_SCENE_H__

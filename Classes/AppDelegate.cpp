@@ -1,5 +1,4 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
 #include "MenuScene.h"
 
 USING_NS_CC;
@@ -10,13 +9,13 @@ typedef struct tagResource
 	std::string directory;
 }Resource;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(320, 480);
-//static cocos2d::Size designResolutionSize = cocos2d::Size(768, 1024);
-
 static Resource smallResource	= { cocos2d::Size(320, 480), "small" };
 static Resource mediumResource	= { cocos2d::Size(768, 1024), "medium" };
 static Resource largeResource	= { cocos2d::Size(1536, 2048), "large" };
 
+static cocos2d::Size designResolutionSize = smallResource.size;
+											//mediumResource.size;
+											//largeResource.size;
 AppDelegate::AppDelegate()
 {
 }
@@ -112,8 +111,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    //auto scene = HelloWorld::createScene();
-	auto scene = MenuScene::createScene();
+	auto scene = MenuScene::scene();
 
     // run
     director->runWithScene(scene);

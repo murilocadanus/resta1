@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-Scene* OptionsScene::createScene()
+Scene* OptionsScene::scene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
@@ -28,35 +28,35 @@ bool OptionsScene::init()
 	// Set menu position
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
-	auto middleScreen = Vec2((visibleSize.width + origin.x) / 2, (visibleSize.height + origin.y) / 2);
+	auto middleScreen = Point((visibleSize.width + origin.x) / 2, (visibleSize.height + origin.y) / 2);
 
 	// Add background
 	auto background = Sprite::create("game_options.png");
-	background->setPosition(Vec2::ZERO);
+	background->setPosition(middleScreen);
 	this->addChild(background, 0);
 
 	// Create menu items
 	auto music = MenuItemImage::create("green_pinup_press.png", "", CC_CALLBACK_1(OptionsScene::music, this));
-	music->setPosition(Vec2(0.0f, -20.0f));
+	music->setPosition(Point::ZERO);
 
 	auto effects = MenuItemImage::create("green_pinup_press.png", "", CC_CALLBACK_1(OptionsScene::effects, this));
-	effects->setPosition(Vec2(0.0f, -70.0f));
+	effects->setPosition(Point::ZERO);
 
 	auto back = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
-	back->setPosition(Vec2(-50.0f, -150.0f));
+	back->setPosition(Point::ZERO);
 
 	// Create menus
 	auto menuOptions = Menu::create(music, effects, NULL);
 	menuOptions->setPosition(Vec2::ZERO);
 
 	auto menuNav = Menu::create(back, NULL);
-	menuNav->setPosition(Vec2::ZERO);
+	menuNav->setPosition(Point(visibleSize.width * 0.25 + origin.x, visibleSize.height * 0.20 + origin.y));
 	
 	// Add menus to layer
 	this->addChild(menuOptions, 1);
 	this->addChild(menuNav, 1);
 
-	this->setPosition(middleScreen);
+	//this->setPosition(middleScreen);
 }
 
 void OptionsScene::music(cocos2d::Ref* pSender)

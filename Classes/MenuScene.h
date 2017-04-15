@@ -11,17 +11,18 @@
 
 #include "cocos2d.h"
 
-class MenuScene : public cocos2d::Layer
+USING_NS_CC;
+
+class MenuScene : public Layer
 {
 public:
-	static cocos2d::Scene* createScene();
+	static Scene* scene();
 	virtual bool init();
 
-	// implement the "static create()" method manually
 	CREATE_FUNC(MenuScene);
 
-	void start(cocos2d::Ref* pSender);
-	void options(cocos2d::Ref* pSender);
+	void start(Ref* pSender);
+	void options(Ref* pSender);
 };
 
 #endif //__MENU_SCENE_H__

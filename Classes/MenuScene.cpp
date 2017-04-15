@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 
-Scene* MenuScene::createScene()
+Scene* MenuScene::scene()
 {
   // 'scene' is an autorelease object
   auto scene = Scene::create();
@@ -55,12 +55,12 @@ bool MenuScene::init()
 
 void MenuScene::start(cocos2d::Ref* pSender)
 {
-	auto gameScene = GameScene::create();
+	auto gameScene = GameScene::scene();
 	Director::getInstance()->replaceScene(gameScene);
 }
 
 void MenuScene::options(cocos2d::Ref* pSender)
 {
-	auto optionsScene = OptionsScene::createScene();
+	auto optionsScene = OptionsScene::scene();
 	Director::getInstance()->pushScene(optionsScene);
 }
