@@ -1,5 +1,6 @@
 #include "OptionsScene.h"
 #include "MenuScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -35,21 +36,50 @@ bool OptionsScene::init()
 	background->setPosition(middleScreen);
 	this->addChild(background, 0);
 
-	// Create menu items
-	auto music = MenuItemImage::create("green_pinup_press.png", "", CC_CALLBACK_1(OptionsScene::music, this));
-	music->setPosition(Point::ZERO);
+	// Create toggle for music
+	auto musicItemOn = MenuItemImage::create("green_pinup.png", "green_pinup.png");
+	auto musicItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png");
 
-	auto effects = MenuItemImage::create("green_pinup_press.png", "", CC_CALLBACK_1(OptionsScene::effects, this));
-	effects->setPosition(Point::ZERO);
+	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender){
+		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+		if (CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() == 0.0f) {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
+		}
+		else {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.0f);
+		}
+		CCLOG("Music volume: %f", CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
 
-	auto back = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
-	back->setPosition(Point::ZERO);
+	}, musicItemOn, musicItemOff, NULL);
+
+	/*
+	// Create toogle for effects
+	auto effectsItemOn = MenuItemImage::create("green_pinup.png", "green_pinup.png", [&](Ref* sender){
+		CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
+	});
+
+	auto effectsItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png", [&](Ref* sender){
+		CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
+	});
+
+	auto itemToggleEffects = MenuItemToggle::createWithCallback([&](Ref* pSender){
+		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+		if (toggleItem->getSelectedItem() == effectsItemOn) {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
+		}
+		else if (toggleItem->getSelectedItem() == effectsItemOff) {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
+		}
+	}, effectsItemOn, effectsItemOff, NULL);*/
+
+	auto backBtn = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
 
 	// Create menus
-	auto menuOptions = Menu::create(music, effects, NULL);
-	menuOptions->setPosition(Vec2::ZERO);
+	auto menuOptions = Menu::create(itemToggleMusic, /*itemToggleEffects,*/ NULL);
+	menuOptions->alignItemsVerticallyWithPadding(visibleSize.height * 0.028);
+	menuOptions->setPosition(Point(visibleSize.width * 0.72 + origin.x, visibleSize.height * 0.35 + origin.y));
 
-	auto menuNav = Menu::create(back, NULL);
+	auto menuNav = Menu::create(backBtn, NULL);
 	menuNav->setPosition(Point(visibleSize.width * 0.25 + origin.x, visibleSize.height * 0.20 + origin.y));
 	
 	// Add menus to layer
@@ -57,16 +87,6 @@ bool OptionsScene::init()
 	this->addChild(menuNav, 1);
 
 	//this->setPosition(middleScreen);
-}
-
-void OptionsScene::music(cocos2d::Ref* pSender)
-{
-	// Todo
-}
-
-void OptionsScene::effects(cocos2d::Ref* pSender)
-{
-	// Todo
 }
 
 void OptionsScene::back(cocos2d::Ref* pSender)

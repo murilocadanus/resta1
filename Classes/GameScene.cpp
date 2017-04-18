@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "GameOverScene.h"
+#include "SimpleAudioEngine.h"
 
 const int boardPermission[33][4][2] =
 {
@@ -32,6 +33,9 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	// Stop background music
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+
 	// Remove pieceListener
 	Director::getInstance()->getEventDispatcher()->removeEventListener(pieceListener);
 }
@@ -74,6 +78,9 @@ bool GameScene::init()
 
 	// Create main game loop
 	this->scheduleUpdate();
+
+	// Play backgroung music
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background.wav", true);
 
 	return true;
 }
@@ -288,6 +295,9 @@ void GameScene::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
 						// Add the score
 						score += 100;
 						scoreLabel->setString(std::to_string(score));
+
+						// Play sound effect
+						CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tick.aiff");
 
 						// Set the end of game
 						isGameOver = verifyGameOver();

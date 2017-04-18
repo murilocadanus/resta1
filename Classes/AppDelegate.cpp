@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -106,9 +107,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		searchPaths.push_back(smallResource.directory);
     }
 
-	FileUtils::getInstance()->setSearchPaths(searchPaths);
+	auto fileUtils = FileUtils::getInstance();
+	fileUtils->setSearchPaths(searchPaths);
 
     register_all_packages();
+
+	// Load backgrond music
+	auto audioEngine = CocosDenshion::SimpleAudioEngine::getInstance();
+	audioEngine->preloadBackgroundMusic(fileUtils->fullPathForFilename("background.wav").c_str());
+	audioEngine->preloadEffect(fileUtils->fullPathForFilename("tick.aiff").c_str());
+
+	// Lower playback volume for effects
+	audioEngine->setBackgroundMusicVolume(0.5);
+	audioEngine->setEffectsVolume(1.0);
 
     // create a scene. it's an autorelease object
 	auto scene = MenuScene::scene();

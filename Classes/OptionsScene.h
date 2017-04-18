@@ -20,10 +20,8 @@ public:
 	virtual bool init();
 
 	CREATE_FUNC(OptionsScene);
-
-	void music(Ref* pSender);
-	void effects(Ref* pSender);
 	void back(Ref* pSender);
+
 };
 
 #endif //__OPTIONS_SCENE_H__
