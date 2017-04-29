@@ -68,7 +68,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	std::vector<std::string> searchPaths;
 	
 	// Set the design resolution
-	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::EXACT_FIT);
+	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResource.size.height)
