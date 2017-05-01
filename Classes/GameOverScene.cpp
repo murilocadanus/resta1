@@ -43,13 +43,13 @@ bool GameOverScene::init()
 	this->addChild(background, 0);
 
 	// Create time label
-	auto timeLabel = Label::createWithTTF(timeGame, "fonts/arial.ttf", 14);
+	auto timeLabel = Label::createWithTTF(timeGame, "fonts/arial.ttf", 22);
 	timeLabel->setColor(Color3B(0, 0, 0));
 	timeLabel->setPosition(Point(middleScreen.x, visibleSize.height * 0.27 + origin.y));
 	this->addChild(timeLabel, 1);
 
 	// Create score label
-	auto scoreLabel = Label::createWithTTF(std::to_string(score), "fonts/arial.ttf", 14);
+	auto scoreLabel = Label::createWithTTF(std::to_string(score), "fonts/arial.ttf", 22);
 	scoreLabel->setColor(Color3B(0, 0, 0));
 	scoreLabel->setPosition(Point(middleScreen.x, visibleSize.height * 0.4 + origin.y));
 	this->addChild(scoreLabel);
@@ -63,6 +63,8 @@ bool GameOverScene::init()
 
 	// Add menus to layer
 	this->addChild(menuNav, 1);
+    
+    return true;
 }
 
 void GameOverScene::back(cocos2d::Ref* pSender)

@@ -10,9 +10,11 @@ typedef struct tagResource
 	std::string directory;
 }Resource;
 
-static Resource smallResource	= { cocos2d::Size(320, 480), "small" };
-static Resource mediumResource	= { cocos2d::Size(768, 1024), "medium" };
-static Resource largeResource	= { cocos2d::Size(1536, 2048), "large" };
+static Resource smallResource       = { cocos2d::Size(640, 1136), "small" };
+static Resource mediumResource      = { cocos2d::Size(750, 1334), "medium" };
+static Resource mediumLargeResource	= { cocos2d::Size(1242, 2208), "medium-large" };
+static Resource largeResource       = { cocos2d::Size(1536, 2048), "large" };
+static Resource largeLargeResource  = { cocos2d::Size(2048, 2732), "large-large" };
 
 static cocos2d::Size designResolutionSize = smallResource.size;
 											//mediumResource.size;
@@ -56,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
@@ -68,26 +70,38 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	std::vector<std::string> searchPaths;
 	
 	// Set the design resolution
-	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::EXACT_FIT);
 
-    // if the frame's height is larger than the height of medium size.
-    if (frameSize.height > mediumResource.size.height)
+    // if the frame's height is larger than the height of large size.
+    if (frameSize.height > largeResource.size.height)
     {
-		// Set the design resolution
-		//glview->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, ResolutionPolicy::NO_BORDER);
-
+        // Set content scale
+        director->setContentScaleFactor(MIN(largeLargeResource.size.height/designResolutionSize.height, largeLargeResource.size.width/designResolutionSize.width));
+        
+        // Set resource assets
+        searchPaths.push_back(largeLargeResource.directory);
+    }
+    // if the frame's height is larger than the height of medium large size.
+    else if (frameSize.height > mediumLargeResource.size.height)
+    {
 		// Set content scale
         director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
 
 		// Set resource assets 
 		searchPaths.push_back(largeResource.directory);
     }
+    // if the frame's height is larger than the height of medium size.
+    else if (frameSize.height > mediumResource.size.height)
+    {
+        // Set content scale
+        director->setContentScaleFactor(MIN(mediumLargeResource.size.height/designResolutionSize.height, mediumLargeResource.size.width/designResolutionSize.width));
+        
+        // Set resource assets
+        searchPaths.push_back(mediumLargeResource.directory);
+    }
     // if the frame's height is larger than the height of small size.
     else if (frameSize.height > smallResource.size.height)
     {
-		// Set the design resolution
-		//glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::NO_BORDER);
-
 		// Set content scale
         director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
 
@@ -97,9 +111,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // if the frame's height is smaller than the height of medium size.
     else
     {
-		// Set the design resolution
-		//glview->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, ResolutionPolicy::NO_BORDER);
-
 		// Set content scale
         director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
 

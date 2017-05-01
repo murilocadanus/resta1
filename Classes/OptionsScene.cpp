@@ -38,44 +38,52 @@ bool OptionsScene::init()
 
 	// Create toggle for music
 	auto musicItemOn = MenuItemImage::create("green_pinup.png", "green_pinup.png");
-	auto musicItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png");
-
-	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender){
-		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+    auto musicItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png");
+    
+	auto itemToggleMusic = MenuItemToggle::createWithCallback([&](Ref* pSender)
+    {
+        MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+        
 		if (CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() == 0.0f) {
 			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
+            toggleItem->setSelectedIndex(0);
 		}
 		else {
 			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.0f);
+            toggleItem->setSelectedIndex(1);
 		}
-		CCLOG("Music volume: %f", CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
-
 	}, musicItemOn, musicItemOff, NULL);
+    
+    // Check music state to start enable or disabled
+    if (CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() == 0.0f) itemToggleMusic->setSelectedIndex(1);
+    else itemToggleMusic->setSelectedIndex(0);
 
-	/*
 	// Create toogle for effects
-	auto effectsItemOn = MenuItemImage::create("green_pinup.png", "green_pinup.png", [&](Ref* sender){
-		CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
-	});
+    auto effectsItemOn = MenuItemImage::create("green_pinup.png", "green_pinup.png");
+    auto effectsItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png");
+    
+	auto itemToggleEffects = MenuItemToggle::createWithCallback([&](Ref* pSender)
+    {
+        MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
+        
+        if (CocosDenshion::SimpleAudioEngine::getInstance()->getEffectsVolume() == 0.0f) {
+            CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
+            toggleItem->setSelectedIndex(0);
+        }
+        else {
+            CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
+            toggleItem->setSelectedIndex(1);
+        }
+    }, effectsItemOn, effectsItemOff, NULL);
+    
+    // Check effects state to start enable or disabled
+    if (CocosDenshion::SimpleAudioEngine::getInstance()->getEffectsVolume() == 0.0f) itemToggleEffects->setSelectedIndex(1);
+    else itemToggleEffects->setSelectedIndex(0);
 
-	auto effectsItemOff = MenuItemImage::create("green_pinup_press.png", "green_pinup_press.png", [&](Ref* sender){
-		CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
-	});
-
-	auto itemToggleEffects = MenuItemToggle::createWithCallback([&](Ref* pSender){
-		MenuItemToggle *toggleItem = (MenuItemToggle *)pSender;
-		if (toggleItem->getSelectedItem() == effectsItemOn) {
-			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
-		}
-		else if (toggleItem->getSelectedItem() == effectsItemOff) {
-			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
-		}
-	}, effectsItemOn, effectsItemOff, NULL);*/
-
-	auto backBtn = MenuItemImage::create("btn_voltar.png", "", CC_CALLBACK_1(OptionsScene::back, this));
+	auto backBtn = MenuItemImage::create("btn_voltar.png", "btn_voltar.png", CC_CALLBACK_1(OptionsScene::back, this));
 
 	// Create menus
-	auto menuOptions = Menu::create(itemToggleMusic, /*itemToggleEffects,*/ NULL);
+	auto menuOptions = Menu::create(itemToggleMusic, itemToggleEffects, NULL);
 	menuOptions->alignItemsVerticallyWithPadding(visibleSize.height * 0.028);
 	menuOptions->setPosition(Point(visibleSize.width * 0.72 + origin.x, visibleSize.height * 0.35 + origin.y));
 
@@ -87,6 +95,8 @@ bool OptionsScene::init()
 	this->addChild(menuNav, 1);
 
 	//this->setPosition(middleScreen);
+    
+    return true;
 }
 
 void OptionsScene::back(cocos2d::Ref* pSender)

@@ -15,13 +15,13 @@ const int boardPermission[33][4][2] =
 
 const float initialBoard[33][4] =
 {
-												{ .385f, .755f, 1, 0 }, { .51f, .755f, 1, 1 }, { .635f, .755f, 1, 2 },
-												{ .385f, .67f, 1, 3 }, { .51f, .67f, 1, 4 }, { .635f, .67f, 1, 5 },
-	{ .135f, .585f, 1, 6 }, { .26f, .585f, 1, 7 }, { .385f, .585f, 1, 8 }, { .51f, .585f, 1, 9 }, { .635f, .585f, 1, 10 }, { .76f, .585f, 1, 11 }, { .885f, .585f, 1, 12 },
+												{ .385f, .71f, 1, 0 }, { .51f, .71f, 1, 1 }, { .635f, .71f, 1, 2 },
+												{ .385f, .64f, 1, 3 }, { .51f, .64f, 1, 4 }, { .635f, .64f, 1, 5 },
+	{ .135f, .57f, 1, 6 }, { .26f, .57f, 1, 7 }, { .385f, .57f, 1, 8 }, { .51f, .57f, 1, 9 }, { .635f, .57f, 1, 10 }, { .76f, .57f, 1, 11 }, { .885f, .57f, 1, 12 },
 	{ .135f, .5f, 1, 13 }, { .26f, .5f, 1, 14 }, { .385f, .5f, 1, 15 }, { .51f, .5f, 0, 16 }, { .635f, .5f, 1, 17 }, { .76f, .5f, 1, 18 }, { .885f, .5f, 1, 19 },
-	{ .135f, .4175f, 1, 20 }, { .26f, .4175f, 1, 21 }, { .385f, .4175f, 1, 22 }, { .51f, .4175f, 1, 23 }, { .635f, .4175f, 1, 24 }, { .76f, .4175f, 1, 25 }, { .885f, .4175f, 1, 26 },
-												{ .385f, .335f, 1, 27 }, { .51f, .335f, 1, 28 }, { .635f, .335f, 1, 29 },
-												{ .385f, .2525f, 1, 30 }, { .51f, .2525f, 1, 31 }, { .635f, .2525f, 1, 32 }
+	{ .135f, .43f, 1, 20 }, { .26f, .43f, 1, 21 }, { .385f, .43f, 1, 22 }, { .51f, .43f, 1, 23 }, { .635f, .43f, 1, 24 }, { .76f, .43f, 1, 25 }, { .885f, .43f, 1, 26 },
+												{ .385f, .36f, 1, 27 }, { .51f, .36f, 1, 28 }, { .635f, .36f, 1, 29 },
+												{ .385f, .29f, 1, 30 }, { .51f, .29f, 1, 31 }, { .635f, .29f, 1, 32 }
 };
 
 float board[33][4];
@@ -178,16 +178,16 @@ void GameScene::loadLevel(int level)
 	}
 
 	// Create time label
-	timeLabel = Label::createWithTTF("Tempo: 00:00", "fonts/arial.ttf", 14);
+	timeLabel = Label::createWithTTF("Tempo: 00:00", "fonts/arial.ttf", 22);
 	timeLabel->setColor(Color3B(0, 0, 0));
-	timeLabel->setPosition(Point(visibleSize.width * 0.27 + origin.x, visibleSize.height * 0.855 + origin.y));
+	timeLabel->setPosition(Point(visibleSize.width * 0.27 + origin.x, visibleSize.height * 0.8 + origin.y));
 	timeLabel->setRotation(-15.0f);
 	this->addChild(timeLabel, 1);
 
 	// Create score label
 	score = 0;
-	scoreLabel = Label::create("0", "fonts/arial.ttf", 14);
-	scoreLabel->setPosition(Point(visibleSize.width * 0.78 + origin.x, visibleSize.height * 0.86 + origin.y));
+	scoreLabel = Label::createWithTTF("0", "fonts/arial.ttf", 22);
+	scoreLabel->setPosition(Point(visibleSize.width * 0.78 + origin.x, visibleSize.height * 0.8 + origin.y));
 	scoreLabel->setRotation(-15.0f);
 	this->addChild(scoreLabel);
 }
@@ -227,7 +227,7 @@ bool GameScene::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 
 				// Cache current position to be used as last valid position
 				selectedPieceLastPos = i;
-				selectedPiece->setZOrder(11);
+				selectedPiece->setLocalZOrder(11);
 
 				return true;
 			}
@@ -312,7 +312,7 @@ void GameScene::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
 
 	// Set board position to selected piece
 	selectedPiece->setPosition(newPos);
-	selectedPiece->setZOrder(10);
+	selectedPiece->setLocalZOrder(10);
 }
 
 bool GameScene::verifyGameOver()
