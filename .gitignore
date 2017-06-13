@@ -71,6 +71,7 @@ xcschememanagement.plist
 ._.*
 xcuserdata/
 DerivedData/
+proj.ios_mac/Build/
 
 # Ignore files built by AppCode
 .idea/
